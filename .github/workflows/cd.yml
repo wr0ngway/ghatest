@@ -16,6 +16,9 @@ jobs:
 
       - name: set operation environment
         run: |
+          echo hi
+          ls fooghgh
+          echo testing fail fast
           branch=${GITHUB_REF##*/}
           if [[ "$branch" == "master" ]]; then
             env="production"
@@ -27,10 +30,5 @@ jobs:
       - name: check env
         run: env
 
-      - name: check env
-        run: ruby -v
-
-#      - name: Set up Ruby 2.7
-#        uses: actions/setup-ruby@v1
-#        with:
-#          ruby-version: 2.7
+      - name: Install Atmos
+        run: gem install --no-document simplygenius-atmos
