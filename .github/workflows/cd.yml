@@ -14,21 +14,23 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: set env
-        run: export BAR=baz
+      - name: set operation environment
+        run: |
+          branch=${GITHUB_REF##*/}
+          if [[ "$branch" == "master" ]]; then
+            env="production"
+          else
+            env="development"
+          fi
+          echo "::set-env name=ENV::${env}"
 
       - name: check env
         run: env
 
-      - name: long script
-        run: |
-          if [[ "foo" = "bar" ]]; then
-            echo "it is"
-          else
-            echo "it isnt"
-          fi
+      - name: check env
+        run: ruby -v
 
-      - name: Set up Ruby 2.7
-        uses: actions/setup-ruby@v1
-        with:
-          ruby-version: 2.7
+#      - name: Set up Ruby 2.7
+#        uses: actions/setup-ruby@v1
+#        with:
+#          ruby-version: 2.7
